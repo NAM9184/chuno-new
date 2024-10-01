@@ -232,10 +232,10 @@
 .bgWrap {
   margin-top: -120px;
   height: 500px;
+  overflow: hidden;
 }
 
 .thumbBg {
-  transform: scale(1.2);
   width: 100%;
   background: var(--color-fff);
 }

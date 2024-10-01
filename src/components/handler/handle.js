@@ -157,10 +157,10 @@ export const handleKeyDown = (
       ); // 이전 곡으로 이동
       break;
     case 'ArrowRight':
-      handleForward10(setPlayedSeconds, setDuration); // 10초 앞으로 이동
+      handleForward10(setDuration); // 10초 앞으로 이동
       break;
     case 'ArrowLeft':
-      handleBackward10(setPlayedSeconds, setDuration); // 10초 뒤로 이동
+      handleBackward10(setDuration); // 10초 뒤로 이동
       break;
     default:
       break;

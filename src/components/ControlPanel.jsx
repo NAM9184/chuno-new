@@ -74,6 +74,9 @@ function ControlPanel({
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [item, setCurrentVideoIndex, setIsPlaying, setDuration]);
+  useEffect(() => {
+    console.log('isPlaying has changed:', isPlaying);
+  }, [isPlaying]);
 
   return (
     <>
@@ -91,7 +94,6 @@ function ControlPanel({
           }
           onDuration={setDuration}
           volume={volume}
-          muted={true}
           onEnded={handle.handleVideoEnd}
         />
       </div>
@@ -151,17 +153,28 @@ function ControlPanel({
               <img src={icons.prevIcon} className={styles.prev} alt="" />
             </button>
             <button
-              onClick={() =>
-                isPlaying
-                  ? handle.handlePause(setIsPlaying)
-                  : handle.handlePlay(setIsPlaying)
-              }
+              onClick={() => {
+                // 현재 상태와 다른 상태로만 변경하도록 조건 추가
+                if (isPlaying) {
+                  console.log('Pausing...');
+                  handle.handlePause(() => {
+                    if (isPlaying) setIsPlaying(false); // 상태가 'true'인 경우에만 'false'로 변경
+                  });
+                } else {
+                  console.log('Playing...');
+                  handle.handlePlay(() => {
+                    if (!isPlaying) setIsPlaying(true); // 상태가 'false'인 경우에만 'true'로 변경
+                  });
+                }
+                console.log('isPlaying:', isPlaying); // 상태 변경 확인
+              }}
             >
               <img
                 src={isPlaying ? icons.pauseIcon : icons.playIcon}
                 className={isPlaying ? styles.pause : styles.play}
               />
             </button>
+
             <button
               onClick={() =>
                 handle.handleNextClick(item, isRandom, setCurrentVideoIndex)
